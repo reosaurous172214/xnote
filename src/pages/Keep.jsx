@@ -1,17 +1,17 @@
+// src/pages/Keep.jsx
 import React, { useEffect, useMemo, useState } from "react";
-import axios from "axios";
 import NoteComposer from "../components/NoteComposer";
 import NoteCard from "../components/NoteCard";
 import { useNavigate } from "react-router-dom";
-// Corrected import: 'Squares2X2Icon' with a capital 'X'
-import { Squares2X2Icon, Bars3Icon } from '@heroicons/react/24/outline'; 
-const aps = process.env.REACT_APP_API_URL;
+import { Squares2X2Icon, Bars3Icon } from '@heroicons/react/24/outline';
+import API from '../api/axios';
+
 export default function Keep() {
   const [notes, setNotes] = useState([]);
   const [query, setQuery] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [stacked, setStacked] = useState(false); 
+  const [stacked, setStacked] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
   const navigate = useNavigate();
 
@@ -19,7 +19,7 @@ export default function Keep() {
     if (!user?.email) return;
     setLoading(true);
     try {
-      const res = await axios.get(`${aps}/api/notes/${user.email}`);
+      const res = await API.get(`/api/notes/${user.email}`);
       setNotes(res.data);
     } catch (err) {
       console.error(err);
@@ -32,7 +32,11 @@ export default function Keep() {
   const addNote = async ({ title, content, color = "#fff", pinned = false }) => {
     if (!user?.email) return;
     try {
+<<<<<<< HEAD
       const res = await axios.post(`${aps}/api/notes`, { email: user.email, title, content, color, pinned, archived: false });
+=======
+      const res = await API.post(`/api/notes`, { email: user.email, title, content, color, pinned, archived: false });
+>>>>>>> 24f3214 (Add latest frontend changes (Navbar, Trash feature, etc.))
       setNotes(prev => [res.data.note, ...prev]);
     } catch (err) {
       console.error(err);
@@ -58,6 +62,24 @@ export default function Keep() {
     ? "grid grid-cols-1 gap-4" 
     : "grid sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4";
 
+  // SOFT DELETE (move to trash)
+  const handleDeleteNote = async (id) => {
+    try {
+      await API.put(`/api/notes/${id}/trash`);
+      setNotes(prev => prev.filter(n => n._id !== id)); // remove from current view
+    } catch (err) {
+      console.error("Failed to move note to trash", err);
+    }
+  };
+
+  // If you want to handle pin/archive refetch/update from child, add handlers accordingly.
+  const handlePinToggle = (updatedNote) => {
+    setNotes(prev => prev.map(n => n._id === updatedNote._id ? updatedNote : n));
+  };
+  const handleArchiveToggle = (updatedNote) => {
+    setNotes(prev => prev.map(n => n._id === updatedNote._id ? updatedNote : n));
+  };
+
   return (
     <div className="mx-auto max-w-6xl px-4 py-6">
       <div className="flex justify-between items-center mb-4">
@@ -72,11 +94,7 @@ export default function Keep() {
           onClick={() => setStacked(prev => !prev)} 
           className="p-2 rounded-lg text-gray-500 hover:text-gray-900 hover:bg-gray-200"
         >
-          {stacked ? (
-            <Squares2X2Icon className="h-6 w-6" />
-          ) : (
-            <Bars3Icon className="h-6 w-6" />
-          )}
+          {stacked ? <Squares2X2Icon className="h-6 w-6" /> : <Bars3Icon className="h-6 w-6" />}
         </button>
       </div>
 
@@ -89,7 +107,9 @@ export default function Keep() {
         <>
           <h3 className="mt-6 mb-2 text-sm font-semibold text-gray-600">PINNED</h3>
           <div className={gridClasses}>
-            {pinned.map(n => <NoteCard key={n._id} note={n} />)}
+            {pinned.map(n => (
+              <NoteCard key={n._id} note={n} onDelete={handleDeleteNote} onPinToggle={handlePinToggle} onArchiveToggle={handleArchiveToggle} />
+            ))}
           </div>
         </>
       )}
@@ -98,7 +118,9 @@ export default function Keep() {
         <>
           <h3 className="mt-6 mb-2 text-sm font-semibold text-gray-600">OTHERS</h3>
           <div className={gridClasses}>
-            {others.map(n => <NoteCard key={n._id} note={n} />)}
+            {others.map(n => (
+              <NoteCard key={n._id} note={n} onDelete={handleDeleteNote} onPinToggle={handlePinToggle} onArchiveToggle={handleArchiveToggle} />
+            ))}
           </div>
         </>
       )}

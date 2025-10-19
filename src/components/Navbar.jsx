@@ -1,16 +1,21 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { Menu, X } from "lucide-react";
-const aps = process.env.REACT_APP_API_URL;
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { Menu, X, Trash2, ArchiveBox } from "lucide-react"; // Import icons
+
 export default function Navbar() {
   const navigate = useNavigate();
+  const location = useLocation();
   const [open, setOpen] = useState(false);
-  const user = JSON.parse(localStorage.getItem("user"));
+  const user = JSON.parse(localStorage.getItem("user") || "null");
 
   const handleLogout = () => {
     localStorage.removeItem("user");
     navigate("/login");
+    setOpen(false);
   };
+
+  const linkClass = (path) =>
+    `hover:underline flex items-center gap-1 ${location.pathname === path ? "underline font-bold" : ""}`;
 
   return (
     <nav className="bg-blue-600 text-white shadow">
@@ -22,6 +27,7 @@ export default function Navbar() {
 
         {/* Hamburger button (mobile only) */}
         <button
+          aria-label="Toggle menu"
           className="md:hidden"
           onClick={() => setOpen(!open)}
         >
@@ -30,10 +36,16 @@ export default function Navbar() {
 
         {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-6">
-          <Link to="/" className="hover:underline">Notes</Link>
+          <Link to="/" className={linkClass("/")}>Notes</Link>
+          <Link to="/archive" className={linkClass("/archive")}>
+            <ArchiveBox className="w-4 h-4" /> Archive
+          </Link>
+          <Link to="/trash" className={linkClass("/trash")}>
+            <Trash2 className="w-4 h-4" /> Trash
+          </Link>
           {user ? (
             <>
-              <Link to="/profile" className="hover:underline">Profile</Link>
+              <Link to="/profile" className={linkClass("/profile")}>Profile</Link>
               <button
                 onClick={handleLogout}
                 className="bg-white text-blue-600 px-3 py-1 rounded-lg hover:bg-gray-100"
@@ -43,35 +55,43 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              <Link to="/login" className="hover:underline">Login</Link>
-              <Link to="/register" className="hover:underline">Register</Link>
+              <Link to="/login" className={linkClass("/login")}>Login</Link>
+              <Link to="/register" className={linkClass("/register")}>Register</Link>
             </>
           )}
         </div>
       </div>
 
       {/* Mobile dropdown */}
-      {open && (
-        <div className="md:hidden bg-blue-700 px-4 pb-3 flex flex-col gap-3">
-          <Link to="/" className="hover:underline" onClick={() => setOpen(false)}>Notes</Link>
-          {user ? (
-            <>
-              <Link to="/profile" className="hover:underline" onClick={() => setOpen(false)}>Profile</Link>
-              <button
-                onClick={() => { handleLogout(); setOpen(false); }}
-                className="bg-white text-blue-600 px-3 py-1 rounded-lg hover:bg-gray-100"
-              >
-                Logout
-              </button>
-            </>
-          ) : (
-            <>
-              <Link to="/login" className="hover:underline" onClick={() => setOpen(false)}>Login</Link>
-              <Link to="/register" className="hover:underline" onClick={() => setOpen(false)}>Register</Link>
-            </>
-          )}
-        </div>
-      )}
+      <div
+        className={`md:hidden bg-blue-700 px-4 pb-3 flex flex-col gap-3 transition-all duration-300 ${
+          open ? "max-h-96" : "max-h-0 overflow-hidden"
+        }`}
+      >
+        <Link to="/" className={linkClass("/")} onClick={() => setOpen(false)}>Notes</Link>
+        <Link to="/archive" className={linkClass("/archive")} onClick={() => setOpen(false)}>
+          <ArchiveBox className="w-4 h-4" /> Archive
+        </Link>
+        <Link to="/trash" className={linkClass("/trash")} onClick={() => setOpen(false)}>
+          <Trash2 className="w-4 h-4" /> Trash
+        </Link>
+        {user ? (
+          <>
+            <Link to="/profile" className={linkClass("/profile")} onClick={() => setOpen(false)}>Profile</Link>
+            <button
+              onClick={handleLogout}
+              className="bg-white text-blue-600 px-3 py-1 rounded-lg hover:bg-gray-100"
+            >
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/login" className={linkClass("/login")} onClick={() => setOpen(false)}>Login</Link>
+            <Link to="/register" className={linkClass("/register")} onClick={() => setOpen(false)}>Register</Link>
+          </>
+        )}
+      </div>
     </nav>
   );
 }

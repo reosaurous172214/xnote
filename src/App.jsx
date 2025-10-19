@@ -17,6 +17,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/login" element={<Login />} />
           <Route path="/profile" element={<Profile />} />
+          <Route path="/" element={<Keep />} />
+        <Route path="/trash" element={<Trash />} />
         </Routes>
       </div>
     </Router>
