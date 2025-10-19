@@ -32,7 +32,7 @@ export default function Keep() {
   const addNote = async ({ title, content, color = "#fff", pinned = false }) => {
     if (!user?.email) return;
     try {
-      const res = await axios.post("${aps}/api/notes", { email: user.email, title, content, color, pinned, archived: false });
+      const res = await axios.post(`${aps}/api/notes`, { email: user.email, title, content, color, pinned, archived: false });
       setNotes(prev => [res.data.note, ...prev]);
     } catch (err) {
       console.error(err);
