@@ -4,8 +4,8 @@ import NoteComposer from "../components/NoteComposer";
 import NoteCard from "../components/NoteCard";
 import { useNavigate } from "react-router-dom";
 import { Squares2X2Icon, Bars3Icon } from '@heroicons/react/24/outline';
-import API from '../api/axios';
-
+const aps = process.env.REACT_APP_API_URL;
+import axios from "axios";
 export default function Keep() {
   const [notes, setNotes] = useState([]);
   const [query, setQuery] = useState("");
@@ -19,7 +19,7 @@ export default function Keep() {
     if (!user?.email) return;
     setLoading(true);
     try {
-      const res = await API.get(`/api/notes/${user.email}`);
+      const res = await axios.get(`${aps}/api/notes/${user.email}`);
       setNotes(res.data);
     } catch (err) {
       console.error(err);
@@ -32,11 +32,7 @@ export default function Keep() {
   const addNote = async ({ title, content, color = "#fff", pinned = false }) => {
     if (!user?.email) return;
     try {
-<<<<<<< HEAD
       const res = await axios.post(`${aps}/api/notes`, { email: user.email, title, content, color, pinned, archived: false });
-=======
-      const res = await API.post(`/api/notes`, { email: user.email, title, content, color, pinned, archived: false });
->>>>>>> 24f3214 (Add latest frontend changes (Navbar, Trash feature, etc.))
       setNotes(prev => [res.data.note, ...prev]);
     } catch (err) {
       console.error(err);
