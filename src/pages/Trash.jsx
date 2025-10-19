@@ -1,6 +1,10 @@
 // src/pages/Trash.jsx
 import React, { useEffect, useState } from 'react';
-import API from '../api/axios';
+import axios from 'axios';
+const aps = process.env.REACT_APP_API_URL;
+const API = axios.create({
+  baseURL: aps,
+});
 import TrashNoteCard from '../components/TrashNoteCard';
 import { useNavigate } from 'react-router-dom';
 
