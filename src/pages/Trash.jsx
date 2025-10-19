@@ -1,13 +1,13 @@
 // src/pages/Trash.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import TrashNoteCard from '../components/TrashNoteCard';
+import { useNavigate } from 'react-router-dom';
+
 const aps = process.env.REACT_APP_API_URL;
 const API = axios.create({
   baseURL: aps,
 });
-import TrashNoteCard from '../components/TrashNoteCard';
-import { useNavigate } from 'react-router-dom';
-
 export default function Trash() {
   const user = JSON.parse(localStorage.getItem('user'));
   const navigate = useNavigate();

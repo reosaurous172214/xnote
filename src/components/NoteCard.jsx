@@ -1,7 +1,11 @@
 // src/components/NoteCard.jsx
 import React, { useState, useEffect, useRef } from "react";
 import { Pin, PinOff, Archive, ArchiveX, MoreVertical } from "lucide-react";
-import API from '../api/axios';
+import axios from "axios";
+const aps = process.env.REACT_APP_API_URL;
+const API = axios.create({
+  baseURL: aps,
+});
 
 export default function NoteCard({ note, onPinToggle, onArchiveToggle, onDelete }) {
   const [pinned, setPinned] = useState(note.pinned);

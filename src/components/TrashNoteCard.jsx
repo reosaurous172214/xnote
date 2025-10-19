@@ -1,6 +1,5 @@
 // src/components/TrashNoteCard.jsx
 import React from 'react';
-import API from '../api/axios';
 
 export default function TrashNoteCard({ note, onRestore, onDeleteForever }) {
   return (

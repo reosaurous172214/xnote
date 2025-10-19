@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import Login from "./pages/Login";
 import Profile from "./pages/Profile";
 import Keep from "./pages/Keep";
-
+import Trash from "./pages/Trash";
 function App() {
   return (
     <Router>

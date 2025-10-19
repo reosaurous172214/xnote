@@ -4,8 +4,8 @@ import NoteComposer from "../components/NoteComposer";
 import NoteCard from "../components/NoteCard";
 import { useNavigate } from "react-router-dom";
 import { Squares2X2Icon, Bars3Icon } from '@heroicons/react/24/outline';
-const aps = process.env.REACT_APP_API_URL;
 import axios from "axios";
+const aps = process.env.REACT_APP_API_URL;
 export default function Keep() {
   const [notes, setNotes] = useState([]);
   const [query, setQuery] = useState("");
@@ -61,7 +61,7 @@ export default function Keep() {
   // SOFT DELETE (move to trash)
   const handleDeleteNote = async (id) => {
     try {
-      await API.put(`/api/notes/${id}/trash`);
+      await axios.put(`/api/notes/${id}/trash`);
       setNotes(prev => prev.filter(n => n._id !== id)); // remove from current view
     } catch (err) {
       console.error("Failed to move note to trash", err);
