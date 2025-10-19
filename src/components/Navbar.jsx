@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import { Menu, X, Trash2, Archive } from "lucide-react"; // ✅ Archive instead of ArchiveBox
+import { Menu, X, Trash2, Archive } from "lucide-react";
+
 export default function Navbar() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,12 +20,15 @@ export default function Navbar() {
   return (
     <nav className="bg-blue-600 text-white shadow">
       <div className="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+        {/* Logo */}
         <Link to="/" className="text-lg font-bold tracking-wide">XNote</Link>
 
+        {/* Hamburger button (mobile only) */}
         <button aria-label="Toggle menu" className="md:hidden" onClick={() => setOpen(!open)}>
           {open ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
         </button>
 
+        {/* Desktop Links */}
         <div className="hidden md:flex items-center gap-6">
           <Link to="/" className={linkClass("/")}>Notes</Link>
           <Link to="/archive" className={linkClass("/archive")}>
@@ -47,25 +51,36 @@ export default function Navbar() {
         </div>
       </div>
 
-      <div className={`md:hidden bg-blue-700 px-4 pb-3 flex flex-col gap-3 transition-all duration-300 ${open ? "max-h-96" : "max-h-0 overflow-hidden"}`}>
-        <Link to="/" className={linkClass("/")} onClick={() => setOpen(false)}>Notes</Link>
-        <Link to="/archive" className={linkClass("/archive")} onClick={() => setOpen(false)}>
-          <Archive className="w-4 h-4" /> Archive
-        </Link>
-        <Link to="/trash" className={linkClass("/trash")} onClick={() => setOpen(false)}>
-          <Trash2 className="w-4 h-4" /> Trash
-        </Link>
-        {user ? (
-          <>
-            <Link to="/profile" className={linkClass("/profile")} onClick={() => setOpen(false)}>Profile</Link>
-            <button onClick={handleLogout} className="bg-white text-blue-600 px-3 py-1 rounded-lg hover:bg-gray-100">Logout</button>
-          </>
-        ) : (
-          <>
-            <Link to="/login" className={linkClass("/login")} onClick={() => setOpen(false)}>Login</Link>
-            <Link to="/register" className={linkClass("/register")} onClick={() => setOpen(false)}>Register</Link>
-          </>
-        )}
+      {/* Mobile Dropdown */}
+      <div
+        className="md:hidden overflow-hidden transition-all duration-300"
+        style={{ maxHeight: open ? "500px" : "0" }}
+      >
+        <div className="bg-blue-700 px-4 pb-3 flex flex-col gap-3">
+          <Link to="/" className={linkClass("/")} onClick={() => setOpen(false)}>Notes</Link>
+          <Link to="/archive" className={linkClass("/archive")} onClick={() => setOpen(false)}>
+            <Archive className="w-4 h-4" /> Archive
+          </Link>
+          <Link to="/trash" className={linkClass("/trash")} onClick={() => setOpen(false)}>
+            <Trash2 className="w-4 h-4" /> Trash
+          </Link>
+          {user ? (
+            <>
+              <Link to="/profile" className={linkClass("/profile")} onClick={() => setOpen(false)}>Profile</Link>
+              <button
+                onClick={handleLogout}
+                className="bg-white text-blue-600 px-3 py-1 rounded-lg hover:bg-gray-100"
+              >
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/login" className={linkClass("/login")} onClick={() => setOpen(false)}>Login</Link>
+              <Link to="/register" className={linkClass("/register")} onClick={() => setOpen(false)}>Register</Link>
+            </>
+          )}
+        </div>
       </div>
     </nav>
   );
