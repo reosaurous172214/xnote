@@ -1,70 +1,146 @@
-# Getting Started with Create React App
+##📝 xNote Frontend
+Website : [Xnote]{https://xnote-ntkq.onrender.com}
+A modern and responsive React-based note-taking web app where users can create, edit, pin, archive, and organize their notes effortlessly.
+xNote provides a clean interface, fast performance, and seamless synchronization with the backend.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+@@🚀 Features
 
-## Available Scripts
+✍️ Create & Edit Notes — Add, update, and delete notes easily.
 
-In the project directory, you can run:
+📌 Pin/Unpin Notes — Keep important notes on top.
 
-### `npm start`
+🗂️ Archive Notes — Move less-used notes to the archive.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+🎨 Color Customization — Choose note background colors for better organization.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+📷 Image Support — Attach images to notes.
 
-### `npm test`
+📱 Responsive Design — Fully optimized for mobile, tablet, and desktop.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+⚡ Real-time Updates — Reflects pinned or archived changes instantly.
 
-### `npm run build`
+🔐 User Authentication — Integrated with backend (JWT or session-based login).
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+☁️ API Integration — Connected with Node.js/Express-based xNote Backend.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+##🏗️ Project Structure
+xnote-frontend/
+├── public/
+│   ├── index.html
+│   └── favicon.ico
+│
+├── src/
+│   ├── api/
+│   │   └── axios.js
+│   ├── components/
+│   │   ├── Navbar.jsx
+│   │   ├── NoteCard.jsx
+│   │   ├── NoteComposer.jsx
+│   │   └── NotesList.jsx
+│   ├── pages/
+│   │   ├── Home.jsx
+│   │   ├── Archive.jsx
+│   │   ├── Pinned.jsx
+│   │   ├── Profile.jsx
+│   │   └── Login.jsx
+│   ├── App.js
+│   ├── index.js
+│   ├── App.css
+│   └── utils/
+│       └── constants.js
+│
+├── .env
+├── package.json
+├── README.md
+└── tailwind.config.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+##⚙️ Installation & Setup
+1️⃣ Clone the repository
+git clone https://github.com/<your-username>/xnote-frontend.git
+cd xnote-frontend
 
-### `npm run eject`
+##2️⃣ Install dependencies
+npm install
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+##3️⃣ Create an .env file
+REACT_APP_API_URL=http://localhost:5000/api
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+(Change the URL if your backend is hosted remotely.)
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+##4️⃣ Run the development server
+npm start
 
-## Learn More
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+The app will start on http://localhost:3000
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+🔗 API Integration
 
-### Code Splitting
+All API requests are handled through axios.js using the base URL from the environment variable.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
 
-### Analyzing the Bundle Size
+##📦 Available Scripts
+Command	Description
+npm start	Runs the app in development mode
+npm run build	Builds the app for production
+npm run lint	Lints code using ESLint
+npm test	Runs the test suite (if added)
+🎨 UI Components
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+NoteCard – Displays individual notes with pin/archive actions.
 
-### Making a Progressive Web App
+NoteComposer – Modal or inline editor to create new notes.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Navbar – Responsive navigation bar for switching between views.
 
-### Advanced Configuration
+PinnedNotes – Section displaying pinned notes.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+ArchivedNotes – Section for archived notes.
 
-### Deployment
+##🌐 Backend Connection
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+xNote Frontend communicates with xNote Backend, a Node.js + Express + MongoDB server.
 
-### `npm run build` fails to minify
+🔗 Backend Repository: [xnote-backend]{https://xnote-serverx.onrender.com}
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+##📱 Responsive Design
+
+Built using Tailwind CSS with a mobile-first approach.
+Supports:
+
+Desktop (≥1024px)
+
+Tablet (≥768px)
+
+Mobile (≤767px)
+
+##🧩 Tech Stack
+Category	Technology
+Frontend	React.js (Hooks, Context API)
+Styling	Tailwind CSS
+Icons	Lucide React
+HTTP Client	Axios
+State Management	React Context / useState
+Backend API	Node.js + Express
+Database	MongoDB (via backend)
+##🧠 Future Enhancements
+
+🔍 Search and filter notes
+
+🏷️ Add tags/categories
+
+🌙 Dark mode
+
+📤 Note sharing
+
+🔔 Notifications and reminders
+
+##👨‍💻 Author
+
+Saurabh Sharma
+📧 Email: saurabhsh@ug23.cs@nitp.ac.in
+
+##📜 License
+
+This project is licensed under the MIT License — see the LICENSE
+ file for details.
